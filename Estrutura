@@ -3,33 +3,33 @@ nome_do_app_loja/
 │   ├── __init__.py
 │   ├── Nucleo/                              # Núcleo da aplicação (configurações, banco de dados)
 │   │   ├── __init__.py
-│   │   ├── configuracoes.py                 # Variáveis de configuração
-│   │   └── banco_dados.py                   # Conexão com SQLite ou outro banco
-│   ├── autenticacao/                        # Módulo de login/usuário
+│   │   ├── Configuracoes.py                 # Variáveis de configuração
+│   │   └── Banco_dados.py                   # Conexão com SQLite ou outro banco
+│   ├── Cutenticacao/                        # Módulo de login/usuário
 │   │   ├── __init__.py
-│   │   ├── controlador.py                   # Lógica de login e logout
-│   │   ├── modelo.py                        # Classe do usuário
-│   │   └── ui_login.py                      # Interface da tela de login
-│   ├── produtos/
-│   │   ├── controlador.py
-│   │   ├── modelo.py
-│   │   └── ui_produtos.py                   # Interface para cadastro/listagem de produtos
-│   ├── estoque/
-│   │   ├── controlador.py
-│   │   ├── modelo.py
-│   │   └── ui_estoque.py
-│   ├── vendas/
-│   │   ├── controlador.py
-│   │   ├── modelo.py
-│   │   └── ui_vendas.py
-│   ├── clientes/
-│   │   ├── controlador.py
-│   │   ├── modelo.py
-│   │   └── ui_clientes.py
-│   ├── relatorios/
-│   │   ├── gerador.py                        # Funções para gerar relatórios (PDF, Excel, etc.)
-│   │   └── ui_relatorios.py
-│   └── janela_principal.py                   # Interface principal do sistema (menu lateral, abas etc.)
+│   │   ├── Controlador.py                   # Lógica de login e logout
+│   │   ├── Modelo.py                        # Classe do usuário
+│   │   └── Ui_login.py                      # Interface da tela de login
+│   ├── Produtos/
+│   │   ├── Controlador.py
+│   │   ├── Modelo.py
+│   │   └── Ui_produtos.py                   # Interface para cadastro/listagem de produtos
+│   ├── Estoque/
+│   │   ├── Controlador.py
+│   │   ├── Modelo.py
+│   │   └── Ui_estoque.py
+│   ├── Vendas/
+│   │   ├── Controlador.py
+│   │   ├── Modelo.py
+│   │   └── Ui_vendas.py
+│   ├── Clientes/
+│   │   ├── Controlador.py
+│   │   ├── Móduloodelo.py
+│   │   └── Ui_clientes.py
+│   ├── Relatorios/
+│   │   ├── Gerador.py                        # Funções para gerar relatórios (PDF, Excel, etc.)
+│   │   └── Ui_relatorios.py
+│   └── Janela_principal.py                   # Interface principal do sistema (menu lateral, abas etc.)
 ├── recursos/
 │   ├── icones/
 │   └── estilo.qss                            # Tema visual da interface
