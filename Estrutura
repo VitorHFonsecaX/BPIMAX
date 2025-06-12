@@ -1,0 +1,43 @@
+nome_do_app_loja/
+├── app/
+│   ├── __init__.py
+│   ├── nucleo/                      # Núcleo da aplicação (configurações, banco de dados)
+│   │   ├── __init__.py
+│   │   ├── configuracoes.py         # Variáveis de configuração
+│   │   └── banco_dados.py           # Conexão com SQLite ou outro banco
+│   ├── autenticacao/                # Módulo de login/usuário
+│   │   ├── __init__.py
+│   │   ├── controlador.py           # Lógica de login e logout
+│   │   ├── modelo.py                # Classe do usuário
+│   │   └── ui_login.py              # Interface da tela de login
+│   ├── produtos/
+│   │   ├── controlador.py
+│   │   ├── modelo.py
+│   │   └── ui_produtos.py           # Interface para cadastro/listagem de produtos
+│   ├── estoque/
+│   │   ├── controlador.py
+│   │   ├── modelo.py
+│   │   └── ui_estoque.py
+│   ├── vendas/
+│   │   ├── controlador.py
+│   │   ├── modelo.py
+│   │   └── ui_vendas.py
+│   ├── clientes/
+│   │   ├── controlador.py
+│   │   ├── modelo.py
+│   │   └── ui_clientes.py
+│   ├── relatorios/
+│   │   ├── gerador.py               # Funções para gerar relatórios (PDF, Excel, etc.)
+│   │   └── ui_relatorios.py
+│   └── janela_principal.py          # Interface principal do sistema (menu lateral, abas etc.)
+├── recursos/
+│   ├── icones/
+│   └── estilo.qss                   # Tema visual da interface
+├── ui/                              # Arquivos .ui criados no Qt Designer
+│   ├── login.ui
+│   └── janela_principal.ui
+├── testes/
+│   └── test_*.py
+├── requisitos.txt                   # Dependências do projeto
+├── README.md                        # Documentação do sistema
+└── main.py                          # Ponto de entrada da aplicação (cria QApplication e abre janela)
