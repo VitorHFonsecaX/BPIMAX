@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QApplication
 import sys
-from App.janela_principal import JanelaPrincipal
+from App.Janela_principal import JanelaPrincipal
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
