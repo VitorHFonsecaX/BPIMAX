@@ -62,4 +62,4 @@
 ├── .gitignore # Arquivo para o Git ignorar pastas/arquivos (ex: venv, __pycache__)
 ├── requirements.txt # Lista de dependências Python do projeto (ex: PySide6)
 ├── README.md # Documentação básica do projeto
-└── main.py # Ponto de entrada principal da aplicação (substituindo Inicializador.py da raiz)
+└── Iniciador.py # Ponto de entrada principal da aplicação (substituindo Inicializador.py da raiz)
