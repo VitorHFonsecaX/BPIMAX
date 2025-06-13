@@ -1,0 +1,142 @@
+/* nome_do_app_loja/Recursos/qss/estilo.qss */
+
+/* Paleta de Cores */
+/* #F8F9FA: Branco Suave (Fundo Geral) */
+/* #34495E: Azul Escuro (Texto, Menu Lateral) */
+/* #4A90E2: Azul Primário (Botões, Destaques) */
+/* #3A7ECB: Azul Primário Hover */
+/* #E74C3C: Vermelho/Laranja (Destaque, Ativo) */
+/* #C0392B: Vermelho/Laranja Escuro */
+/* #E0E0E0: Cinza Claro (Bordas, Divisores) */
+/* #2ECC71: Verde (Sucesso) */
+
+/* Estilo Global para todos os Widgets */
+QWidget {
+    background-color: #F8F9FA; /* Fundo geral claro */
+    font-family: 'Segoe UI', sans-serif;
+    color: #34495E; /* Cor de texto padrão */
+    font-size: 13px;
+}
+
+/* --- Estilos da Janela de Login (Ui_login.py) --- */
+#loginFrame {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+QLabel#titleLabel { /* Título "Login no Sistema" */
+    font-size: 28px;
+    font-weight: bold;
+    color: #34495E;
+    margin-bottom: 20px;
+}
+
+QLineEdit {
+    border: 1px solid #BDC3C7;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+QLineEdit:focus {
+    border: 2px solid #4A90E2;
+}
+
+QPushButton#loginButton {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+QPushButton#loginButton:hover {
+    background-color: #3A7ECB;
+}
+QPushButton#loginButton:pressed {
+    background-color: #2980B9;
+}
+
+QLabel#statusMessage {
+    color: #E74C3C; /* Padrão para erros */
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+QLabel#logoLabel { /* Logo na tela de login */
+    margin-bottom: 20px;
+}
+
+
+/* --- Estilos da Janela Principal (Janela_principal.py) --- */
+#sidebarFrame {
+    background-color: #34495E;
+    border-right: 1px solid #2C3E50;
+    padding: 10px 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+QLabel#logoLabelSidebar {
+    background-color: #2C3E50;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #4A90E2;
+}
+
+QPushButton.navButton { /* Classe para botões de navegação */
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: left;
+    border-radius: 0px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+QPushButton.navButton:hover {
+    background-color: #3A7ECB;
+    border-left: 5px solid #E74C3C;
+    padding-left: 15px;
+}
+
+QPushButton.navButton:checked {
+    background-color: #4A90E2;
+    font-weight: bold;
+    border-left: 5px solid #E74C3C;
+    padding-left: 15px;
+}
+
+#contentArea { /* Área que contém o QStackedWidget */
+    background-color: white;
+    border-radius: 10px;
+    margin: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilo para QLabel nas páginas de conteúdo (Janela Principal) */
+#contentArea QLabel {
+    font-size: 20px;
+    color: #34495E;
+    padding: 10px;
+}
+
+/* Estilo para QLabel dentro de PaginaGenerica (exemplo) */
+PaginaGenerica QLabel { /* Estilos para labels dentro da PaginaGenerica */
+    color: #34495E;
+}
+PaginaGenerica QLabel[text^="Página de"] { /* Alvo os títulos das páginas */
+    font-size: 32px;
+    font-weight: bold;
+}
+PaginaGenerica QLabel[text*="você gerenciará"] { /* Alvo as descrições das páginas */
+    font-size: 16px;
+    color: #555555;
+}
