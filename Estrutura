@@ -5,7 +5,7 @@ nome_do_app_loja/
 │   │   ├── __init__.py
 │   │   ├── Configuracoes.py                 # Variáveis de configuração
 │   │   └── Banco_dados.py                   # Conexão com SQLite ou outro banco
-│   ├── Cutenticacao/                        # Módulo de login/usuário
+│   ├── Autenticacao/                        # Módulo de login/usuário
 │   │   ├── __init__.py
 │   │   ├── Controlador.py                   # Lógica de login e logout
 │   │   ├── Modelo.py                        # Classe do usuário
@@ -34,7 +34,7 @@ nome_do_app_loja/
 │   ├── icones/
 │   └── estilo.qss                            # Tema visual da interface
 ├── ui/                                       # Arquivos .ui criados no Qt Designer
-│   ├── login.ui
+│   ├── __init__.py
 │   └── janela_principal.ui
 ├── testes/
 │   └── test_*.py
