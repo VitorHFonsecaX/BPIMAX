@@ -84,7 +84,7 @@ class JanelaPrincipal(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Sistema de Gerenciamento")
-        self.setGeometry(100, 100, 1200, 800) # Tamanho padrão para três colunas
+        self.setGeometry(100, 100, 1200, 800)
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -97,7 +97,7 @@ class JanelaPrincipal(QMainWindow):
     def setupUi(self):
         # --- 1. Painel do Menu Lateral Esquerdo ---
         self.side_menu_frame = QFrame(self)
-        self.side_menu_frame.setFixedWidth(200) # Largura fixa para o menu
+        self.side_menu_frame.setFixedWidth(200)
         self.side_menu_frame.setStyleSheet("background-color: #2c3e50; color: white;")
         self.side_menu_layout = QVBoxLayout(self.side_menu_frame)
         self.side_menu_layout.setContentsMargins(10, 20, 10, 20)
@@ -113,7 +113,6 @@ class JanelaPrincipal(QMainWindow):
         from PySide6.QtWidgets import QButtonGroup
         self.button_group = QButtonGroup(self)
         self.button_group.setExclusive(True)
-        # Conecta o sinal de buttonClicked do grupo para gerenciar a visibilidade do painel direito
         self.button_group.buttonClicked.connect(self._handle_menu_button_click)
 
         # Botão "Início" para voltar à tela de boas-vindas
@@ -132,19 +131,19 @@ class JanelaPrincipal(QMainWindow):
         self.side_menu_layout.addWidget(self.btn_clientes)
         self.side_menu_layout.addWidget(self.btn_relatorios)
 
-        self.side_menu_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)) # Empurra botões para cima
+        self.side_menu_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-        # Botão de Deslogar no menu lateral
+        # Botão de Deslogar no menu lateral (tamanho e fonte ajustados, sem border-radius)
         self.btn_logout = QPushButton("Deslogar")
-        self.btn_logout.setFont(QFont("Arial", 14, QFont.Bold))
-        self.btn_logout.setFixedHeight(50)
+        self.btn_logout.setFont(QFont("Arial", 8, QFont.Bold)) # Fonte menor
+        self.btn_logout.setFixedHeight(25) # Altura menor
         self.btn_logout.setStyleSheet("""
             QPushButton {
                 background-color: #e74c3c; /* Vermelho */
                 color: white;
                 border: none;
-                border-radius: 8px;
-                padding: 10px;
+                /* border-radius: 4px; REMOVIDO */
+                padding: 5px;
                 font-weight: bold;
             }
             QPushButton:hover {
@@ -155,7 +154,7 @@ class JanelaPrincipal(QMainWindow):
             }
         """)
         self.side_menu_layout.addWidget(self.btn_logout)
-        self.btn_logout.clicked.connect(self.logout_requested.emit) # Conecta o sinal de logout
+        self.btn_logout.clicked.connect(self.logout_requested.emit)
 
         self.main_layout.addWidget(self.side_menu_frame)
 
@@ -178,12 +177,11 @@ class JanelaPrincipal(QMainWindow):
         self.stacked_widget.addWidget(self.page_clientes)    # Índice 4
         self.stacked_widget.addWidget(self.page_relatorios)  # Índice 5
 
-        # Adiciona o stacked_widget ao layout principal. Ele irá expandir.
-        self.main_layout.addWidget(self.stacked_widget, 1) # Stretch factor 1 para expansão
+        self.main_layout.addWidget(self.stacked_widget, 1)
 
         # --- 3. Painel Lateral Direito (Lembretes e Promoções) ---
         self.right_panel_frame = QFrame(self)
-        self.right_panel_frame.setFixedWidth(250) # Largura fixa
+        self.right_panel_frame.setFixedWidth(250)
         self.right_panel_frame.setStyleSheet("background-color: #ecf0f1; border-left: 1px solid #bdc3c7;")
         self.right_panel_layout = QVBoxLayout(self.right_panel_frame)
         self.right_panel_layout.setContentsMargins(15, 20, 15, 20)
@@ -203,7 +201,6 @@ class JanelaPrincipal(QMainWindow):
         self.right_panel_layout.addWidget(self.reminders_promotions_content)
         self.right_panel_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-        # Adiciona o painel direito ao layout principal. Ele será mostrado/escondido.
         self.main_layout.addWidget(self.right_panel_frame)
 
 
@@ -217,8 +214,9 @@ class JanelaPrincipal(QMainWindow):
 
 
         # Estado inicial: Mostrar a tela de boas-vindas e o painel de lembretes
-        self.stacked_widget.setCurrentIndex(0) # Início
-        self.right_panel_frame.show() # Garante que o painel direito está visível no início
+        self.stacked_widget.setCurrentIndex(0)
+        self.right_panel_frame.show()
+
 
     def _create_menu_button(self, text, icon_path=None):
         button = QPushButton(text)
@@ -230,7 +228,7 @@ class JanelaPrincipal(QMainWindow):
                 border: none;
                 padding: 10px;
                 text-align: left;
-                border-radius: 5px;
+                /* border-radius: 5px; REMOVIDO */
                 font-size: 13px;
             }
             QPushButton:hover {
@@ -242,9 +240,7 @@ class JanelaPrincipal(QMainWindow):
         """)
         button.setCheckable(True)
         self.button_group.addButton(button)
-        # Ao criar o botão, não o deixe marcado por padrão, exceto se for o 'Início'
-        # Não faremos isso aqui, a seleção inicial será gerenciada no setupUi
-        
+
         if icon_path:
             try:
                 icon = QIcon(icon_path)
@@ -256,24 +252,14 @@ class JanelaPrincipal(QMainWindow):
         return button
 
     def _handle_menu_button_click(self, button):
-        # Esta função é chamada quando um botão do grupo é clicado
-        # Ela garante que apenas o botão clicado permaneça "checked"
         for b in self.button_group.buttons():
             if b != button:
-                b.setChecked(False) # Desmarca os outros botões
+                b.setChecked(False)
 
     def _show_page_and_manage_right_panel(self, index):
-        """
-        Alterna a página do QStackedWidget central e a visibilidade do painel direito.
-        """
         self.stacked_widget.setCurrentIndex(index)
 
-        if index == 0: # Se for a página de Boas-Vindas
-            self.right_panel_frame.show() # Mostra o painel de lembretes/promoções
-            self.stacked_widget.layout().setContentsMargins(0, 0, 0, 0) # Sem margem interna para o stacked_widget
-        else: # Se for qualquer outra página de módulo
-            self.right_panel_frame.hide() # Esconde o painel de lembretes/promoções
-            # Garante que o stacked_widget ocupe o espaço total.
-            # O layout irá automaticamente reajustar o stacked_widget para preencher o espaço.
-            # Adicionalmente, podemos forçar a atualização se necessário, mas geralmente não é.
-            # self.main_layout.invalidate() # Força o layout a reavaliar
+        if index == 0:
+            self.right_panel_frame.show()
+        else:
+            self.right_panel_frame.hide()
