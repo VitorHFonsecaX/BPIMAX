@@ -7,6 +7,9 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QSize, Signal
 from PySide6.QtGui import QIcon, QFont
 
+# IMPORTAR A NOVA CLASSE Ui_Vendas
+from App.Nucleo.Vendas.Ui_vendas import Ui_Vendas
+
 # --- Classe para a Tela Inicial / Boas-vindas ---
 class Ui_WelcomePage(QWidget):
     def __init__(self):
@@ -31,7 +34,7 @@ class Ui_WelcomePage(QWidget):
 
         self.setStyleSheet("background-color: #ecf0f1;")
 
-# --- Classes de UI para cada módulo (mantidas como placeholders) ---
+# --- Classes de UI para outros módulos (mantidas como placeholders) ---
 class Ui_Produtos(QWidget):
     def __init__(self):
         super().__init__()
@@ -50,14 +53,15 @@ class Ui_Estoque(QWidget):
         layout.addWidget(label)
         self.setStyleSheet("background-color: #ffe0b2; color: #333; font-size: 20px;")
 
-class Ui_Vendas(QWidget):
-    def __init__(self):
-        super().__init__()
-        layout = QVBoxLayout(self)
-        label = QLabel("Conteúdo da Tela de Vendas")
-        label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(label)
-        self.setStyleSheet("background-color: #c8e6c9; color: #333; font-size: 20px;")
+# REMOVIDA A CLASSE Ui_Vendas SIMPLES AQUI
+# class Ui_Vendas(QWidget):
+#    def __init__(self):
+#        super().__init__()
+#        layout = QVBoxLayout(self)
+#        label = QLabel("Conteúdo da Tela de Vendas")
+#        label.setAlignment(Qt.AlignCenter)
+#        layout.addWidget(label)
+#        self.setStyleSheet("background-color: #c8e6c9; color: #333; font-size: 20px;")
 
 class Ui_Clientes(QWidget):
     def __init__(self):
@@ -79,7 +83,7 @@ class Ui_Relatorios(QWidget):
 
 
 class JanelaPrincipal(QMainWindow):
-    logout_requested = Signal() # Sinal para deslogar
+    logout_requested = Signal()
 
     def __init__(self):
         super().__init__()
@@ -115,7 +119,6 @@ class JanelaPrincipal(QMainWindow):
         self.button_group.setExclusive(True)
         self.button_group.buttonClicked.connect(self._handle_menu_button_click)
 
-        # Botão "Início" para voltar à tela de boas-vindas
         self.btn_inicio = self._create_menu_button("Início", None)
         self.side_menu_layout.addWidget(self.btn_inicio)
 
@@ -133,17 +136,15 @@ class JanelaPrincipal(QMainWindow):
 
         self.side_menu_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-        # Botão de Deslogar no menu lateral (tamanho e fonte ajustados, sem border-radius)
         self.btn_logout = QPushButton("Deslogar")
-        self.btn_logout.setFont(QFont("Arial", 8, QFont.Bold)) # Fonte menor
-        self.btn_logout.setFixedHeight(25) # Altura menor
+        self.btn_logout.setFont(QFont("Arial", 12, QFont.Bold))
+        self.btn_logout.setFixedHeight(40)
         self.btn_logout.setStyleSheet("""
             QPushButton {
-                background-color: #e74c3c; /* Vermelho */
+                background-color: #e74c3c;
                 color: white;
                 border: none;
-                /* border-radius: 4px; REMOVIDO */
-                padding: 5px;
+                padding: 10px;
                 font-weight: bold;
             }
             QPushButton:hover {
@@ -167,7 +168,7 @@ class JanelaPrincipal(QMainWindow):
 
         self.page_produtos = Ui_Produtos()
         self.page_estoque = Ui_Estoque()
-        self.page_vendas = Ui_Vendas()
+        self.page_vendas = Ui_Vendas() # AGORA INSTANCIA A CLASSE COMPLETA DE VENDAS
         self.page_clientes = Ui_Clientes()
         self.page_relatorios = Ui_Relatorios()
 
@@ -228,7 +229,6 @@ class JanelaPrincipal(QMainWindow):
                 border: none;
                 padding: 10px;
                 text-align: left;
-                /* border-radius: 5px; REMOVIDO */
                 font-size: 13px;
             }
             QPushButton:hover {
@@ -240,7 +240,7 @@ class JanelaPrincipal(QMainWindow):
         """)
         button.setCheckable(True)
         self.button_group.addButton(button)
-
+        
         if icon_path:
             try:
                 icon = QIcon(icon_path)
