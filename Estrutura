@@ -1,43 +1,73 @@
 nome_do_app_loja/
-├── App/
-│   ├── __init__.py
-│   ├── Nucleo/                              # Núcleo da aplicação (configurações, banco de dados)
+├── App/                            # Contém todo o código-fonte Python da sua aplicação
+│   ├── __init__.py                 # Indica que 'App' é um pacote Python
+│   │
+│   ├── Nucleo/                     # Módulo para configurações centrais e acesso a dados
 │   │   ├── __init__.py
-│   │   ├── Configuracoes.py                 # Variáveis de configuração
-│   │   └── Banco_dados.py                   # Conexão com SQLite ou outro banco
-│   ├── Autenticacao/                        # Módulo de login/usuário
+│   │   ├── Configuracoes.py        # Variáveis de configuração (ex: caminhos, credenciais DB)
+│   │   └── Banco_dados.py          # Lógica para conexão e operações com o banco de dados
+│   │
+│   ├── Autenticacao/               # Módulo para gerenciamento de usuários e login
 │   │   ├── __init__.py
-│   │   ├── Controlador.py                   # Lógica de login e logout
-│   │   ├── Modelo.py                        # Classe do usuário
-│   │   └── Ui_login.py                      # Interface da tela de login
-│   ├── Produtos/
-│   │   ├── Controlador.py
-│   │   ├── Modelo.py
-│   │   └── Ui_produtos.py                   # Interface para cadastro/listagem de produtos
-│   ├── Estoque/
+│   │   ├── Controlador.py          # Lógica de negócio para autenticação (validar login)
+│   │   ├── Modelo.py               # Definição do modelo de dados para o Usuário
+│   │   └── Ui_login.py             # Interface visual da tela de login (widget PySide6)
+│   │
+│   ├── Produtos/                   # Módulo para gerenciamento de produtos
+│   │   ├── __init__.py
+│   │   ├── Controlador.py          # Lógica de negócio para produtos (CRUD)
+│   │   ├── Modelo.py               # Definição do modelo de dados para o Produto
+│   │   └── Ui_produtos.py          # Interface visual de produtos (widget PySide6)
+│   │
+│   ├── Estoque/                    # Módulo para gerenciamento de estoque
+│   │   ├── __init__.py
 │   │   ├── Controlador.py
 │   │   ├── Modelo.py
 │   │   └── Ui_estoque.py
-│   ├── Vendas/
+│   │
+│   ├── Vendas/                     # Módulo para gerenciamento de vendas
+│   │   ├── __init__.py
 │   │   ├── Controlador.py
 │   │   ├── Modelo.py
 │   │   └── Ui_vendas.py
-│   ├── Clientes/
+│   │
+│   ├── Clientes/                   # Módulo para gerenciamento de clientes
+│   │   ├── __init__.py
 │   │   ├── Controlador.py
-│   │   ├── Móduloodelo.py
+│   │   ├── Modelo.py
 │   │   └── Ui_clientes.py
-│   ├── Relatorios/
-│   │   ├── Gerador.py                        # Funções para gerar relatórios (PDF, Excel, etc.)
-│   │   └── Ui_relatorios.py
-│   └── Janela_principal.py                   # Interface principal do sistema (menu lateral, abas etc.)
-├── recursos/
-│   ├── icones/
-│   └── estilo.qss                            # Tema visual da interface
-├── ui/                                       # Arquivos .ui criados no Qt Designer
-│   ├── __init__.py
-│   └── janela_principal.ui
-├── testes/
-│   └── test_*.py
-├── Requisitos.txt                            # Dependências do projeto
-├── Documentação.md                           # Documentação do sistema
-└── Inicializador.py                          # Ponto de entrada da aplicação (cria QApplication e abre janela)
+│   │
+│   ├── Relatorios/                 # Módulo para geração e visualização de relatórios
+│   │   ├── __init__.py
+│   │   ├── Gerador.py              # Funções para gerar relatórios (PDF, Excel, etc.)
+│   │   └── Ui_relatorios.py        # Interface visual para relatórios
+│   │
+│   └── Janela_principal.py         # Interface principal do sistema (menu lateral, QStackedWidget)
+│
+├── Recursos/                       # Contém todos os ativos estáticos da aplicação (imagens, estilos)
+│   ├── icones/                     # Ícones utilizados na interface
+│   │   ├── produtos.png
+│   │   ├── vendas.png
+│   │   ├── clientes.png
+│   │   ├── estoque.png
+│   │   ├── relatorios.png
+│   │   └── logo_app.png            # Logo para a tela de login
+│   │
+│   └── qss/                        # Arquivos QSS para estilização
+│       └── estilo.qss              # Tema visual global (opcional, pode ser embutido como fizemos)
+│
+├── ui/                             # Contém arquivos .ui gerados pelo Qt Designer (se utilizados)
+│   ├── __init__.py                 # (Opcional, mas útil se você importar classes geradas)
+│   └── janela_principal.ui         # Exemplo de arquivo UI para a janela principal
+│
+├── testes/                         # Pasta para testes unitários e de integração
+│   └── test_autenticacao.py
+│   └── test_produtos.py
+│
+├── venv/                           # (Opcional) Ambiente virtual Python (gerado automaticamente pelo venv/pipenv)
+│   └── ...
+│
+├── .gitignore                      # Arquivo para o Git ignorar pastas/arquivos (ex: venv, __pycache__)
+├── requirements.txt                # Lista de dependências Python do projeto (ex: PySide6)
+├── README.md                       # Documentação básica do projeto
+└── Inicializador.py                # Ponto de entrada principal da aplicação
