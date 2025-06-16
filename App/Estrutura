@@ -31,10 +31,14 @@
 │   │   │   ├── Modelo.py
 │   │   │   └── Ui_clientes.py
 │   │   │
-│   │   └── Relatorios/ # Módulo para geração e visualização de relatórios
-│   │       ├── __init__.py
-│   │       ├── Gerador.py # Funções para gerar relatórios (PDF, Excel, etc.)
-│   │       └── Ui_relatorios.py # Interface visual para relatórios
+│   │   ├── Relatorios/ # Módulo para geração e visualização de relatórios
+│   │   │   ├── __init__.py
+│   │   │   ├── Gerador.py # Funções para gerar relatórios (PDF, Excel, etc.)
+│   │   │   └── Ui_relatorios.py # Interface visual para relatórios
+│   │   │
+│   │   └── Configuração/ # Módulo para geração e visualização de relatórios
+│   │       ├── Controlador.py # Funções para gerar relatórios (PDF, Excel, etc.)
+│   │       └── Ui_Configuração.py # Interface visual para relatórios
 │   │
 │   └── Database/ # Centraliza arquivos relacionados ao banco de dados e configurações
 │       ├── __init__.py
