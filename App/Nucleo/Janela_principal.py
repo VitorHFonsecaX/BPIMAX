@@ -7,8 +7,15 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QSize, Signal
 from PySide6.QtGui import QIcon, QFont
 
-# IMPORTAR A NOVA CLASSE Ui_Vendas
+# IMPORTAR AS CLASSES COMPLETAS DOS MÓDULOS
+# Certifique-se de que estes caminhos estão corretos e apontam para os arquivos com as UIs completas
 from App.Nucleo.Vendas.Ui_vendas import Ui_Vendas
+from App.Nucleo.Clientes.Ui_clientes import Ui_Clientes
+# (Você criará os módulos completos para Produtos, Estoque e Relatórios futuramente)
+# from App.Nucleo.Produtos.Ui_produtos import Ui_Produtos
+# from App.Nucleo.Estoque.Ui_estoque import Ui_Estoque
+# from App.Nucleo.Relatorios.Ui_relatorios import Ui_Relatorios
+
 
 # --- Classe para a Tela Inicial / Boas-vindas ---
 class Ui_WelcomePage(QWidget):
@@ -27,6 +34,7 @@ class Ui_WelcomePage(QWidget):
         sub_label.setStyleSheet("color: #7f8c8d; margin-top: 10px;")
         layout.addWidget(sub_label)
 
+        # Para centralizar o texto verticalmente
         layout.addStretch(1)
         layout.addWidget(label)
         layout.addWidget(sub_label)
@@ -34,12 +42,14 @@ class Ui_WelcomePage(QWidget):
 
         self.setStyleSheet("background-color: #ecf0f1;")
 
-# --- Classes de UI para outros módulos (mantidas como placeholders) ---
+# --- Classes Placeholder para módulos AINDA NÃO DESENVOLVIDOS COMPLETAMENTE ---
+# Mantenha estas APENAS enquanto não tiver os arquivos .py completos para eles,
+# depois importe e use as classes completas, como fizemos para Vendas e Clientes.
 class Ui_Produtos(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout(self)
-        label = QLabel("Conteúdo da Tela de Produtos")
+        label = QLabel("Conteúdo da Tela de Produtos (Placeholder)") # Texto para diferenciar
         label.setAlignment(Qt.AlignCenter)
         layout.addWidget(label)
         self.setStyleSheet("background-color: #e0f7fa; color: #333; font-size: 20px;")
@@ -48,35 +58,26 @@ class Ui_Estoque(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout(self)
-        label = QLabel("Conteúdo da Tela de Estoque")
+        label = QLabel("Conteúdo da Tela de Estoque (Placeholder)") # Texto para diferenciar
         label.setAlignment(Qt.AlignCenter)
         layout.addWidget(label)
         self.setStyleSheet("background-color: #ffe0b2; color: #333; font-size: 20px;")
 
-# REMOVIDA A CLASSE Ui_Vendas SIMPLES AQUI
-# class Ui_Vendas(QWidget):
+# REMOVIDA A CLASSE Ui_Clientes SIMPLES AQUI, POIS JÁ ESTAMOS IMPORTANDO A COMPLETA
+# class Ui_Clientes(QWidget):
 #    def __init__(self):
 #        super().__init__()
 #        layout = QVBoxLayout(self)
-#        label = QLabel("Conteúdo da Tela de Vendas")
+#        label = QLabel("Conteúdo da Tela de Clientes")
 #        label.setAlignment(Qt.AlignCenter)
 #        layout.addWidget(label)
-#        self.setStyleSheet("background-color: #c8e6c9; color: #333; font-size: 20px;")
-
-class Ui_Clientes(QWidget):
-    def __init__(self):
-        super().__init__()
-        layout = QVBoxLayout(self)
-        label = QLabel("Conteúdo da Tela de Clientes")
-        label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(label)
-        self.setStyleSheet("background-color: #f8bbd0; color: #333; font-size: 20px;")
+#        self.setStyleSheet("background-color: #f8bbd0; color: #333; font-size: 20px;")
 
 class Ui_Relatorios(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout(self)
-        label = QLabel("Conteúdo da Tela de Relatórios")
+        label = QLabel("Conteúdo da Tela de Relatórios (Placeholder)") # Texto para diferenciar
         label.setAlignment(Qt.AlignCenter)
         layout.addWidget(label)
         self.setStyleSheet("background-color: #e1bee7; color: #333; font-size: 20px;")
@@ -166,11 +167,11 @@ class JanelaPrincipal(QMainWindow):
         self.page_welcome = Ui_WelcomePage()
         self.stacked_widget.addWidget(self.page_welcome) # Índice 0
 
-        self.page_produtos = Ui_Produtos()
-        self.page_estoque = Ui_Estoque()
-        self.page_vendas = Ui_Vendas() # AGORA INSTANCIA A CLASSE COMPLETA DE VENDAS
-        self.page_clientes = Ui_Clientes()
-        self.page_relatorios = Ui_Relatorios()
+        self.page_produtos = Ui_Produtos() # Mantém o placeholder por enquanto
+        self.page_estoque = Ui_Estoque()   # Mantém o placeholder por enquanto
+        self.page_vendas = Ui_Vendas()     # AGORA ESTÁ USANDO A CLASSE COMPLETA DE VENDAS
+        self.page_clientes = Ui_Clientes() # AGORA ESTÁ USANDO A CLASSE COMPLETA DE CLIENTES
+        self.page_relatorios = Ui_Relatorios() # Mantém o placeholder por enquanto
 
         self.stacked_widget.addWidget(self.page_produtos)    # Índice 1
         self.stacked_widget.addWidget(self.page_estoque)     # Índice 2
@@ -259,7 +260,13 @@ class JanelaPrincipal(QMainWindow):
     def _show_page_and_manage_right_panel(self, index):
         self.stacked_widget.setCurrentIndex(index)
 
-        if index == 0:
+        # Esconde o painel lateral direito para telas que precisam de mais espaço
+        # E mostra para a tela de início ou outras que não precisam do espaço total
+        if index == 0: # Índice da tela de Boas-vindas
             self.right_panel_frame.show()
-        else:
+        elif index == 3: # Índice da tela de Vendas (PDV)
             self.right_panel_frame.hide()
+        elif index == 4: # Índice da tela de Clientes (Cadastro/Gestão)
+            self.right_panel_frame.hide()
+        else: # Para outras telas, você decide se mostra ou esconde
+            self.right_panel_frame.show() # Ou .hide() dependendo da necessidade
