@@ -115,7 +115,14 @@ class Ui_Vendas(QWidget):
         self.sales_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.sales_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.sales_table.itemDoubleClicked.connect(self._edit_sale)
-        self.sales_table.setStyleSheet("QTableWidget { color: black; }") # Garante texto da tabela preto
+        self.sales_table.setStyleSheet("""
+          QTableWidget {
+             color: black; /* Garante texto das células preto */
+            }
+          QHeaderView::section {
+             color: black; /* Garante texto do cabeçalho preto */
+            }
+            """)
 
         layout.addWidget(self.sales_table)
 
@@ -137,7 +144,7 @@ class Ui_Vendas(QWidget):
 
         # Formulário de Venda (Campos de Cliente, Data)
         customer_date_groupbox = QGroupBox("Informações da Venda")
-        # customer_date_groupbox.setStyleSheet("QGroupBox { color: black; }") # Se quiser garantir a cor do título do QGroupBox
+        customer_date_groupbox.setStyleSheet("QGroupBox { color: black; }") # Se quiser garantir a cor do título do QGroupBox
         customer_date_layout = QVBoxLayout(customer_date_groupbox)
 
         customer_layout = QHBoxLayout()
@@ -163,7 +170,7 @@ class Ui_Vendas(QWidget):
 
         # Tabela de Itens da Venda
         items_groupbox = QGroupBox("Itens da Venda")
-        # items_groupbox.setStyleSheet("QGroupBox { color: black; }") # Se quiser garantir a cor do título do QGroupBox
+        items_groupbox.setStyleSheet("QGroupBox { color: black; }") # Se quiser garantir a cor do título do QGroupBox
         items_layout = QVBoxLayout(items_groupbox)
 
         self.sale_items_table = QTableWidget()
@@ -173,7 +180,15 @@ class Ui_Vendas(QWidget):
         self.sale_items_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.sale_items_table.setStyleSheet("QTableWidget { color: black; }") # Garante texto da tabela de itens preto
         items_layout.addWidget(self.sale_items_table)
-
+        self.sale_items_table.setStyleSheet("""
+          QTableWidget {
+             color: black; /* Garante texto das células preto */
+            }
+          QHeaderView::section {
+             color: black; /* Garante texto do cabeçalho preto */
+            }
+            """)
+        
         # Controles para adicionar item
         add_item_layout = QHBoxLayout()
         self.product_input = QLineEdit()
