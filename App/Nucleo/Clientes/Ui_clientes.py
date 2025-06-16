@@ -1,4 +1,4 @@
-# App/Modulos/Ui_clientes.py
+# App/Nucleo/Clientes/Ui_clientes.py
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton,
@@ -6,7 +6,7 @@ from PySide6.QtWidgets import (
     QMessageBox, QSpacerItem, QSizePolicy, QFormLayout # Adicionado QFormLayout
 )
 from PySide6.QtCore import Qt, QDate
-from PySide6.QtGui import QFont, QIcon, QDoubleValidator
+from PySide6.QtGui import QFont, QIcon, QDoubleValidator # <--- CORRIGIDO AQUI: QDoubleValidator de QtGui
 
 class Ui_Clientes(QWidget):
     def __init__(self):
@@ -66,7 +66,7 @@ class Ui_Clientes(QWidget):
             }
             QPushButton:hover { background-color: #27ae60; }
         """)
-        self.btn_new_cliente.setIcon(QIcon("Recursos/icones/add.png")) # Certifique-se de ter um ícone 'add.png'
+        self.btn_new_cliente.setIcon(QIcon("Recursos/icones/add.png"))
         self.btn_new_cliente.clicked.connect(self._show_new_cliente_form)
         toolbar_layout.addWidget(self.btn_new_cliente)
 
@@ -178,7 +178,6 @@ class Ui_Clientes(QWidget):
         layout.addLayout(action_buttons_layout)
 
     def _load_sample_clientes_data(self):
-        # Dados de clientes de exemplo
         self.clientes_data = [
             {"id": "C001", "nome": "Empresa Alpha Ltda", "cpf_cnpj": "12.345.678/0001-90", "telefone": "(31) 3212-3456", "email": "contato@alpha.com", "endereco": "Rua A, 100, Centro, Contagem - MG"},
             {"id": "C002", "nome": "Maria Joana", "cpf_cnpj": "123.456.789-01", "telefone": "(31) 98765-4321", "email": "maria@email.com", "endereco": "Av. Brasil, 500, Bairro X, Belo Horizonte - MG"},
@@ -197,7 +196,6 @@ class Ui_Clientes(QWidget):
             self.clientes_table.setItem(row_idx, 4, QTableWidgetItem(cliente["email"]))
             self.clientes_table.setItem(row_idx, 5, QTableWidgetItem(cliente["endereco"]))
             
-            # Garante que o texto dentro das células da tabela é preto
             for col in range(self.clientes_table.columnCount()):
                 item = self.clientes_table.item(row_idx, col)
                 if item:
@@ -227,11 +225,11 @@ class Ui_Clientes(QWidget):
         self.telefone_input.clear()
         self.email_input.clear()
         self.clientes_stacked_widget.setCurrentIndex(1)
-        self.nome_input.setFocus() # Foca no primeiro campo
+        self.nome_input.setFocus()
 
     def _edit_cliente(self, item):
         cliente_id = self.clientes_table.item(item.row(), 0).text()
-        self.current_editing_cliente_id = cliente_id # Armazena o ID do cliente que está sendo editado
+        self.current_editing_cliente_id = cliente_id
         
         selected_cliente = next((c for c in self.clientes_data if c["id"] == cliente_id), None)
 
@@ -262,7 +260,6 @@ class Ui_Clientes(QWidget):
         is_editing = hasattr(self, 'current_editing_cliente_id') and self.current_editing_cliente_id is not None
         
         if is_editing:
-            # Lógica para editar cliente existente
             for i, cliente in enumerate(self.clientes_data):
                 if cliente["id"] == self.current_editing_cliente_id:
                     self.clientes_data[i] = {
@@ -276,7 +273,6 @@ class Ui_Clientes(QWidget):
                     QMessageBox.information(self, "Cliente Salvo", f"Cliente {nome} atualizado com sucesso!")
                     break
         else:
-            # Lógica para novo cliente
             new_cliente_id = f"C{len(self.clientes_data) + 1:03d}"
             new_cliente = {
                 "id": new_cliente_id,
@@ -289,18 +285,17 @@ class Ui_Clientes(QWidget):
             self.clientes_data.append(new_cliente)
             QMessageBox.information(self, "Cliente Salvo", f"Cliente {nome} cadastrado com sucesso!")
         
-        # Limpa o ID de edição após salvar
         self.current_editing_cliente_id = None 
         
         self._populate_clientes_table(self.clientes_data)
-        self._cancel_cliente_form() # Volta para a tela de listagem
+        self._cancel_cliente_form()
 
     def _cancel_cliente_form(self):
         reply = QMessageBox.question(self, "Confirmar Cancelamento", 
                                      "Tem certeza que deseja cancelar esta operação? Todas as alterações não salvas serão perdidas.",
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
-            self.current_editing_cliente_id = None # Limpa o ID de edição ao cancelar
+            self.current_editing_cliente_id = None
             self.clientes_stacked_widget.setCurrentIndex(0)
             self.nome_input.clear()
             self.cpf_cnpj_input.clear()

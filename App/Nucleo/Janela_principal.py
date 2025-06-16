@@ -8,14 +8,12 @@ from PySide6.QtCore import Qt, QSize, Signal
 from PySide6.QtGui import QIcon, QFont
 
 # IMPORTAR AS CLASSES COMPLETAS DOS MÓDULOS
-# Certifique-se de que estes caminhos estão corretos e apontam para os arquivos com as UIs completas
 from App.Nucleo.Vendas.Ui_vendas import Ui_Vendas
 from App.Nucleo.Clientes.Ui_clientes import Ui_Clientes
-# (Você criará os módulos completos para Produtos, Estoque e Relatórios futuramente)
-# from App.Nucleo.Produtos.Ui_produtos import Ui_Produtos
-# from App.Nucleo.Estoque.Ui_estoque import Ui_Estoque
-# from App.Nucleo.Relatorios.Ui_relatorios import Ui_Relatorios
+from App.Nucleo.Produtos.Ui_produtos import Ui_Produtos    # Importar a classe completa de Produtos
+from App.Nucleo.Estoque.Ui_estoque import Ui_Estoque      # Importar a classe completa de Estoque
 # from App.Nucleo.Configuracoes.Ui_configuracoes import Ui_Configuracoes # Futura importação
+# from App.Nucleo.Relatorios.Ui_relatorios import Ui_Relatorios
 
 # --- Classe para a Tela Inicial / Boas-vindas ---
 class Ui_WelcomePage(QWidget):
@@ -34,7 +32,6 @@ class Ui_WelcomePage(QWidget):
         sub_label.setStyleSheet("color: #7f8c8d; margin-top: 10px;")
         layout.addWidget(sub_label)
 
-        # Para centralizar o texto verticalmente
         layout.addStretch(1)
         layout.addWidget(label)
         layout.addWidget(sub_label)
@@ -43,24 +40,7 @@ class Ui_WelcomePage(QWidget):
         self.setStyleSheet("background-color: #ecf0f1;")
 
 # --- Classes Placeholder para módulos AINDA NÃO DESENVOLVIDOS COMPLETAMENTE ---
-class Ui_Produtos(QWidget):
-    def __init__(self):
-        super().__init__()
-        layout = QVBoxLayout(self)
-        label = QLabel("Conteúdo da Tela de Produtos (Placeholder)")
-        label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(label)
-        self.setStyleSheet("background-color: #e0f7fa; color: #333; font-size: 20px;")
-
-class Ui_Estoque(QWidget):
-    def __init__(self):
-        super().__init__()
-        layout = QVBoxLayout(self)
-        label = QLabel("Conteúdo da Tela de Estoque (Placeholder)")
-        label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(label)
-        self.setStyleSheet("background-color: #ffe0b2; color: #333; font-size: 20px;")
-
+# Agora, Produtos e Estoque não são mais placeholders aqui!
 class Ui_Relatorios(QWidget):
     def __init__(self):
         super().__init__()
@@ -70,7 +50,6 @@ class Ui_Relatorios(QWidget):
         layout.addWidget(label)
         self.setStyleSheet("background-color: #e1bee7; color: #333; font-size: 20px;")
 
-# NOVA CLASSE PLACEHOLDER PARA CONFIGURAÇÕES
 class Ui_Configuracoes(QWidget):
     def __init__(self):
         super().__init__()
@@ -127,26 +106,26 @@ class JanelaPrincipal(QMainWindow):
         self.btn_vendas = self._create_menu_button("Vendas", "Recursos/icones/vendas.png")
         self.btn_clientes = self._create_menu_button("Clientes", "Recursos/icones/clientes.png")
         self.btn_relatorios = self._create_menu_button("Relatórios", "Recursos/icones/relatorios.png")
-        self.btn_configuracoes = self._create_menu_button("Configurações", "Recursos/icones/configuracoes.png") # NOVO BOTÃO
+        self.btn_configuracoes = self._create_menu_button("Configurações", "Recursos/icones/configuracoes.png")
 
         self.side_menu_layout.addWidget(self.btn_produtos)
         self.side_menu_layout.addWidget(self.btn_estoque)
         self.side_menu_layout.addWidget(self.btn_vendas)
         self.side_menu_layout.addWidget(self.btn_clientes)
         self.side_menu_layout.addWidget(self.btn_relatorios)
-        self.side_menu_layout.addWidget(self.btn_configuracoes) # ADICIONANDO O NOVO BOTÃO
+        self.side_menu_layout.addWidget(self.btn_configuracoes)
 
         self.side_menu_layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         self.btn_logout = QPushButton("Deslogar")
-        self.btn_logout.setFont(QFont("Arial", 6, QFont.Bold))
-        self.btn_logout.setFixedHeight(25)
+        self.btn_logout.setFont(QFont("Arial", 12, QFont.Bold))
+        self.btn_logout.setFixedHeight(40)
         self.btn_logout.setStyleSheet("""
             QPushButton {
                 background-color: #e74c3c;
                 color: white;
                 border: none;
-                padding: 8px;
+                padding: 10px;
                 font-weight: bold;
             }
             QPushButton:hover {
@@ -168,19 +147,19 @@ class JanelaPrincipal(QMainWindow):
         self.page_welcome = Ui_WelcomePage()
         self.stacked_widget.addWidget(self.page_welcome) # Índice 0
 
-        self.page_produtos = Ui_Produtos()
-        self.page_estoque = Ui_Estoque()
+        self.page_produtos = Ui_Produtos()    # AGORA INSTANCIA A CLASSE COMPLETA DE PRODUTOS
+        self.page_estoque = Ui_Estoque()      # AGORA INSTANCIA A CLASSE COMPLETA DE ESTOQUE
         self.page_vendas = Ui_Vendas()
         self.page_clientes = Ui_Clientes()
         self.page_relatorios = Ui_Relatorios()
-        self.page_configuracoes = Ui_Configuracoes() # NOVA PÁGINA
+        self.page_configuracoes = Ui_Configuracoes()
 
         self.stacked_widget.addWidget(self.page_produtos)    # Índice 1
         self.stacked_widget.addWidget(self.page_estoque)     # Índice 2
         self.stacked_widget.addWidget(self.page_vendas)      # Índice 3
         self.stacked_widget.addWidget(self.page_clientes)    # Índice 4
         self.stacked_widget.addWidget(self.page_relatorios)  # Índice 5
-        self.stacked_widget.addWidget(self.page_configuracoes) # NOVO ÍNDICE 6
+        self.stacked_widget.addWidget(self.page_configuracoes) # Índice 6
 
         self.main_layout.addWidget(self.stacked_widget, 1)
 
@@ -193,7 +172,7 @@ class JanelaPrincipal(QMainWindow):
         self.right_panel_layout.setSpacing(15)
 
         right_panel_title = QLabel("Lembretes & Promoções")
-        font_right_title = QFont("Arial", 12, QFont.Bold)
+        font_right_title = QFont("Arial", 14, QFont.Bold)
         right_panel_title.setFont(font_right_title)
         right_panel_title.setAlignment(Qt.AlignCenter)
         right_panel_title.setStyleSheet("color: #2c3e50; margin-bottom: 10px;")
@@ -216,7 +195,7 @@ class JanelaPrincipal(QMainWindow):
         self.btn_vendas.clicked.connect(lambda: self._show_page_and_manage_right_panel(3))
         self.btn_clientes.clicked.connect(lambda: self._show_page_and_manage_right_panel(4))
         self.btn_relatorios.clicked.connect(lambda: self._show_page_and_manage_right_panel(5))
-        self.btn_configuracoes.clicked.connect(lambda: self._show_page_and_manage_right_panel(6)) # NOVA CONEXÃO
+        self.btn_configuracoes.clicked.connect(lambda: self._show_page_and_manage_right_panel(6))
 
         # Estado inicial: Mostrar a tela de boas-vindas e o painel de lembretes
         self.stacked_widget.setCurrentIndex(0)
@@ -271,7 +250,11 @@ class JanelaPrincipal(QMainWindow):
             self.right_panel_frame.hide()
         elif index == 4: # Índice da tela de Clientes (Cadastro/Gestão)
             self.right_panel_frame.hide()
-        elif index == 6: # Índice da tela de Configurações - Adicionado aqui
-            self.right_panel_frame.hide() # Configurações provavelmente precisa de tela cheia
-        else: # Para outras telas, você decide se mostra ou esconde
-            self.right_panel_frame.show()
+        elif index == 1: # Índice da tela de Produtos - Esconder painel
+            self.right_panel_frame.hide()
+        elif index == 2: # Índice da tela de Estoque - Esconder painel
+            self.right_panel_frame.hide()
+        elif index == 6: # Índice da tela de Configurações - Esconder painel
+            self.right_panel_frame.hide()
+        else: # Para outras telas, como Relatórios, você decide se mostra ou esconde
+            self.right_panel_frame.show() # Por enquanto, mostra para relatórios

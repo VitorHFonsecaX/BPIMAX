@@ -1,12 +1,13 @@
-# App/Modulos/Ui_vendas.py
+# App/Nucleo/Vendas/Ui_vendas.py
+
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton,
     QTableWidget, QTableWidgetItem, QHeaderView, QComboBox, QDateEdit,
     QStackedWidget, QGroupBox, QMessageBox, QSpacerItem, QSizePolicy,
-    QGridLayout # Importar QGridLayout para a calculadora/teclado
+    QGridLayout # <--- Garante que QGridLayout está aqui e é importado corretamente de QtWidgets
 )
 from PySide6.QtCore import Qt, QDate
-from PySide6.QtGui import QFont, QIcon, QDoubleValidator # Importar QDoubleValidator
+from PySide6.QtGui import QFont, QIcon, QDoubleValidator 
 
 class Ui_Vendas(QWidget):
     def __init__(self):
@@ -37,7 +38,7 @@ class Ui_Vendas(QWidget):
         # --- Página 2: Formulário de Nova Venda/Detalhes (PDV) ---
         self.new_sale_page = QWidget()
         self.sales_stacked_widget.addWidget(self.new_sale_page)
-        self._setup_new_sale_page() # Esta é a função que vamos redefinir
+        self._setup_new_sale_page() 
 
         self.sales_stacked_widget.setCurrentIndex(0)
 
@@ -46,7 +47,6 @@ class Ui_Vendas(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(10)
 
-        # Título da seção (já tinha cor #2c3e50 que é um cinza escuro, quase preto)
         title_label = QLabel("Gestão de Vendas")
         title_label.setFont(QFont("Arial", 18, QFont.Bold))
         layout.addWidget(title_label)
@@ -155,7 +155,7 @@ class Ui_Vendas(QWidget):
         self.product_input_pdv.setFixedHeight(40)
         self.product_input_pdv.setFont(QFont("Arial", 12))
         self.product_input_pdv.setStyleSheet("border: 2px solid #3498db; border-radius: 8px; padding: 5px; color: black;")
-        product_quantity_layout.addWidget(self.product_input_pdv, 3) # Ocupa mais espaço
+        product_quantity_layout.addWidget(self.product_input_pdv, 3) 
 
         self.quantity_input_pdv = QLineEdit("1")
         self.quantity_input_pdv.setPlaceholderText("Qtd")
@@ -163,7 +163,7 @@ class Ui_Vendas(QWidget):
         self.quantity_input_pdv.setFixedHeight(40)
         self.quantity_input_pdv.setFont(QFont("Arial", 12))
         self.quantity_input_pdv.setStyleSheet("border: 2px solid #bdc3c7; border-radius: 8px; padding: 5px; color: black;")
-        self.quantity_input_pdv.setValidator(QDoubleValidator(0.01, 99999.99, 2)) # Permite quantidade decimal
+        self.quantity_input_pdv.setValidator(QDoubleValidator(0.01, 99999.99, 2))
         product_quantity_layout.addWidget(self.quantity_input_pdv, 1)
 
         product_layout.addLayout(product_quantity_layout)
@@ -178,7 +178,7 @@ class Ui_Vendas(QWidget):
             }
             QPushButton:hover { background-color: #27ae60; }
         """)
-        self.btn_add_item_pdv.clicked.connect(self._add_item_to_sale) # Conecta ao método existente
+        self.btn_add_item_pdv.clicked.connect(self._add_item_to_sale)
         product_layout.addWidget(self.btn_add_item_pdv)
 
         left_column_layout.addWidget(product_input_group)
@@ -192,20 +192,20 @@ class Ui_Vendas(QWidget):
         self.sale_items_table_pdv.setEditTriggers(QTableWidget.NoEditTriggers)
         self.sale_items_table_pdv.setStyleSheet("""
             QTableWidget {
-                color: black; /* Garante texto das células preto */
-                background-color: #f8f8f8; /* Levemente cinza para contraste */
+                color: black;
+                background-color: #f8f8f8;
                 border: 1px solid #ccc;
             }
             QHeaderView::section {
-                background-color: #e0e0e0; /* Fundo cinza claro para cabeçalho */
-                color: black; /* Garante texto do cabeçalho preto */
+                background-color: #e0e0e0;
+                color: black;
                 padding: 5px;
                 border: 1px solid #ccc;
             }
         """)
         left_column_layout.addWidget(self.sale_items_table_pdv)
 
-        main_pdv_layout.addLayout(left_column_layout, 2) # Esta coluna ocupa 2/3 da largura
+        main_pdv_layout.addLayout(left_column_layout, 2)
 
         # --- Coluna Direita: Total, Pagamento, Troco e Ações ---
         right_column_layout = QVBoxLayout()
@@ -238,8 +238,8 @@ class Ui_Vendas(QWidget):
         total_group.setStyleSheet("QGroupBox { color: black; }")
         total_layout = QVBoxLayout(total_group)
         self.total_value_label_pdv = QLabel("R$ 0.00")
-        self.total_value_label_pdv.setFont(QFont("Arial", 28, QFont.Bold)) # Fonte maior para o total
-        self.total_value_label_pdv.setStyleSheet("color: #e74c3c;") # Vermelho para destaque
+        self.total_value_label_pdv.setFont(QFont("Arial", 28, QFont.Bold))
+        self.total_value_label_pdv.setStyleSheet("color: #e74c3c;")
         self.total_value_label_pdv.setAlignment(Qt.AlignCenter)
         total_layout.addWidget(self.total_value_label_pdv)
         right_column_layout.addWidget(total_group)
@@ -270,8 +270,8 @@ class Ui_Vendas(QWidget):
         self.received_input_pdv.setFont(QFont("Arial", 14, QFont.Bold))
         self.received_input_pdv.setStyleSheet("border: 2px solid #2980b9; border-radius: 5px; padding: 5px; color: black;")
         self.received_input_pdv.setAlignment(Qt.AlignRight)
-        self.received_input_pdv.setValidator(QDoubleValidator(0.00, 999999.99, 2)) # Validador para dinheiro
-        self.received_input_pdv.textChanged.connect(self._calculate_change) # Conecta para calcular troco
+        self.received_input_pdv.setValidator(QDoubleValidator(0.00, 999999.99, 2))
+        self.received_input_pdv.textChanged.connect(self._calculate_change)
         received_layout.addWidget(self.received_input_pdv)
         payment_layout.addLayout(received_layout)
 
@@ -282,7 +282,7 @@ class Ui_Vendas(QWidget):
         change_layout.addWidget(change_label)
         self.change_value_label_pdv = QLabel("R$ 0.00")
         self.change_value_label_pdv.setFont(QFont("Arial", 18, QFont.Bold))
-        self.change_value_label_pdv.setStyleSheet("color: #27ae60;") # Verde para o troco
+        self.change_value_label_pdv.setStyleSheet("color: #27ae60;")
         self.change_value_label_pdv.setAlignment(Qt.AlignRight)
         change_layout.addWidget(self.change_value_label_pdv)
         payment_layout.addLayout(change_layout)
@@ -316,21 +316,13 @@ class Ui_Vendas(QWidget):
         self.btn_cancel_sale_pdv.clicked.connect(self._cancel_sale_form)
         pdv_action_buttons_layout.addWidget(self.btn_cancel_sale_pdv)
         
-        # Espaçador para empurrar botões para cima
         pdv_action_buttons_layout.addStretch(1)
 
         right_column_layout.addLayout(pdv_action_buttons_layout)
 
-        main_pdv_layout.addLayout(right_column_layout, 1) # Esta coluna ocupa 1/3 da largura
-
-        # Reconectando os QLineEdits de item para a nova variável product_input_pdv
-        # e ajustando os métodos _add_item_to_sale e _update_total_value
-        # Nota: Os métodos existentes _add_item_to_sale, _remove_item_from_sale,
-        # _update_total_value e _save_sale precisarão ser ajustados
-        # para usar as novas variáveis (e.g., self.product_input_pdv, self.sale_items_table_pdv, etc.)
+        main_pdv_layout.addLayout(right_column_layout, 1)
 
     def _load_sample_sales_data(self):
-        # ... (Mantém o mesmo) ...
         self.sales_data = [
             {"id": "001", "date": "2024-05-10", "customer": "João Silva", "total": 150.50, "status": "Concluída"},
             {"id": "002", "date": "2024-05-12", "customer": "Maria Souza", "total": 230.00, "status": "Pendente"},
@@ -341,7 +333,6 @@ class Ui_Vendas(QWidget):
         self._populate_sales_table(self.sales_data)
 
     def _populate_sales_table(self, data):
-        # ... (Mantém o mesmo) ...
         self.sales_table.setRowCount(0)
         for row_idx, sale in enumerate(data):
             self.sales_table.insertRow(row_idx)
@@ -356,7 +347,6 @@ class Ui_Vendas(QWidget):
                     item.setForeground(Qt.black)
 
     def _apply_filters(self):
-        # ... (Mantém o mesmo) ...
         search_text = self.search_input.text().lower()
         status_filter = self.filter_status_combo.currentText()
         start_date = self.filter_date_start.date()
@@ -377,69 +367,40 @@ class Ui_Vendas(QWidget):
 
     def _show_new_sale_form(self):
         self.new_sale_title_label.setText("PDV - Nova Venda")
-        # Atualiza para as novas variáveis do PDV
         self.customer_input_pdv.clear()
         self.sale_date_edit_pdv.setDate(QDate.currentDate())
-        self.sale_items_table_pdv.setRowCount(0) # Usa a tabela PDV
+        self.sale_items_table_pdv.setRowCount(0)
         self.current_sale_items = []
         self._update_total_value()
-        self.product_input_pdv.clear() # Usa o input PDV
-        self.quantity_input_pdv.setText("1") # Usa o input PDV
-        self.received_input_pdv.setText("0.00") # Reseta o valor recebido
-        self.change_value_label_pdv.setText("R$ 0.00") # Reseta o troco
+        self.product_input_pdv.clear()
+        self.quantity_input_pdv.setText("1")
+        self.received_input_pdv.setText("0.00")
+        self.change_value_label_pdv.setText("R$ 0.00")
         self.sales_stacked_widget.setCurrentIndex(1)
-        self.product_input_pdv.setFocus() # Foca no campo de produto para agilizar
+        self.product_input_pdv.setFocus()
 
     def _edit_sale(self, item):
         sale_id = self.sales_table.item(item.row(), 0).text()
         selected_sale = next((s for s in self.sales_data if s["id"] == sale_id), None)
 
         if selected_sale:
-            # Ao editar, talvez carregar os itens na tabela self.sale_items_table_pdv
-            # e preencher os campos customer_input_pdv e sale_date_edit_pdv.
-            # Por enquanto, mantemos a mensagem, mas o PDV é mais para nova venda.
             QMessageBox.information(self, "Editar Venda", f"Funcionalidade de edição para Venda ID: {sale_id} (simulado).")
         else:
             QMessageBox.warning(self, "Erro", "Venda não encontrada para edição.")
 
     def _add_item_to_sale(self):
-        # Usar as novas variáveis do PDV
         product_name = self.product_input_pdv.text().strip()
         quantity_str = self.quantity_input_pdv.text().strip()
         
-        # Simulação de busca de preço (em um sistema real, viria do banco de dados)
-        # Por enquanto, usaremos um preço fixo ou um campo oculto.
-        # Para fins de demonstração, vamos simular um preço baseado no produto se você não tiver
-        # uma lista de produtos no seu código ainda.
-        # Se você tiver uma lista de produtos, podemos integrá-la aqui.
-        
-        # Para a demonstração inicial, vamos usar um preço simulado, ou permitir entrada manual (se for o caso)
-        # Se você quer o preço vindo de uma base de dados de produtos, me avise para adicionar essa parte.
-        # Por agora, vamos usar um valor default ou um mock.
-        simulated_price = 10.00 # Preço padrão simulado se não houver um campo para ele.
-        # Se você tinha self.price_input, ele foi removido da UI _setup_new_sale_page.
-        # Podemos reintroduzir ou conectar a uma lógica de busca de produto.
+        simulated_price = 10.00 
 
         if not product_name:
             QMessageBox.warning(self, "Erro de Item", "Nome do produto não pode ser vazio.")
             return
         
         try:
-            quantity = float(quantity_str) # Permite quantidades decimais
-            # Assumindo que você vai buscar o preço do produto ou ter um campo para ele.
-            # Por enquanto, vamos manter a lógica de que o preço vem de algum lugar.
-            # Se você quer um campo de preço explícito, me avise para adicioná-lo no layout.
-            # Por agora, para simular, usaremos um preço base:
-            # Ex: self.product_data = {"Coca-Cola": 5.00, "Salgadinho": 3.50, "Chocolate": 7.00}
-            # price = self.product_data.get(product_name, 0.00) # Buscaria em uma lista real de produtos
-            
-            # Para manter o exemplo funcional, vamos usar um preço simulado ou o que estava antes do price_input ser removido:
-            # Se você quer o input de preço de volta, me avise. Por enquanto, vou usar um mock ou o valor do product_input se for um número.
-            
-            # Temporariamente, vamos manter a lógica de um preço manual ou simulado.
-            # Se product_name for um número, talvez seja um código e o preço venha de lá.
-            # Por enquanto, usaremos um preço simulado fixo, ou você pode adicionar um campo de preço visível se quiser.
-            price_for_item = simulated_price # Substitua pela sua lógica real de preço
+            quantity = float(quantity_str)
+            price_for_item = simulated_price
 
             if quantity <= 0:
                 raise ValueError("Quantidade deve ser positiva.")
@@ -456,8 +417,8 @@ class Ui_Vendas(QWidget):
             "subtotal": subtotal
         })
 
-        row_idx = self.sale_items_table_pdv.rowCount() # Usar a tabela PDV
-        self.sale_items_table_pdv.insertRow(row_idx) # Usar a tabela PDV
+        row_idx = self.sale_items_table_pdv.rowCount()
+        self.sale_items_table_pdv.insertRow(row_idx)
         self.sale_items_table_pdv.setItem(row_idx, 0, QTableWidgetItem(product_name))
         self.sale_items_table_pdv.setItem(row_idx, 1, QTableWidgetItem(str(quantity)))
         self.sale_items_table_pdv.setItem(row_idx, 2, QTableWidgetItem(f"{price_for_item:.2f}"))
@@ -475,15 +436,14 @@ class Ui_Vendas(QWidget):
             }
             QPushButton:hover { background-color: #c0392b; }
         """)
-        # A lambda function para remover deve ser ajustada para o self.sale_items_table_pdv
         btn_remove.clicked.connect(lambda checked, r=row_idx: self._remove_item_from_sale(r))
         self.sale_items_table_pdv.setCellWidget(row_idx, 4, btn_remove)
 
         self.product_input_pdv.clear()
         self.quantity_input_pdv.setText("1")
         self._update_total_value()
-        self._calculate_change() # Recalcula o troco ao adicionar item
-        self.product_input_pdv.setFocus() # Foca novamente no campo de produto
+        self._calculate_change()
+        self.product_input_pdv.setFocus()
 
     def _remove_item_from_sale(self, row_idx_to_remove):
         reply = QMessageBox.question(self, "Confirmar Remoção", "Tem certeza que deseja remover este item?",
@@ -491,7 +451,7 @@ class Ui_Vendas(QWidget):
         if reply == QMessageBox.Yes:
             del self.current_sale_items[row_idx_to_remove]
             
-            self.sale_items_table_pdv.setRowCount(0) # Usar a tabela PDV
+            self.sale_items_table_pdv.setRowCount(0)
             for r_idx, item in enumerate(self.current_sale_items):
                 self.sale_items_table_pdv.insertRow(r_idx)
                 self.sale_items_table_pdv.setItem(r_idx, 0, QTableWidgetItem(item["product"]))
@@ -511,16 +471,15 @@ class Ui_Vendas(QWidget):
                     }
                     QPushButton:hover { background-color: #c0392b; }
                 """)
-                # A lambda function para remover deve ser ajustada para o self.sale_items_table_pdv
                 btn_remove.clicked.connect(lambda checked, new_r=r_idx: self._remove_item_from_sale(new_r))
                 self.sale_items_table_pdv.setCellWidget(new_r, 4, btn_remove)
 
             self._update_total_value()
-            self._calculate_change() # Recalcula o troco ao remover item
+            self._calculate_change()
 
     def _update_total_value(self):
         total = sum(item["subtotal"] for item in self.current_sale_items)
-        self.total_value_label_pdv.setText(f"R$ {total:.2f}") # Atualiza a label do PDV
+        self.total_value_label_pdv.setText(f"R$ {total:.2f}")
 
     def _calculate_change(self):
         try:
@@ -531,15 +490,14 @@ class Ui_Vendas(QWidget):
             change = received_amount - total
             self.change_value_label_pdv.setText(f"R$ {change:.2f}")
             if change < 0:
-                self.change_value_label_pdv.setStyleSheet("color: #e74c3c;") # Vermelho se faltar dinheiro
+                self.change_value_label_pdv.setStyleSheet("color: #e74c3c;")
             else:
-                self.change_value_label_pdv.setStyleSheet("color: #27ae60;") # Verde se estiver positivo/zero
+                self.change_value_label_pdv.setStyleSheet("color: #27ae60;")
         except ValueError:
             self.change_value_label_pdv.setText("R$ 0.00")
             self.change_value_label_pdv.setStyleSheet("color: #27ae60;")
 
     def _save_sale(self):
-        # Usar as novas variáveis do PDV
         customer = self.customer_input_pdv.text().strip()
         sale_date = self.sale_date_edit_pdv.date().toString("yyyy-MM-dd")
         total_value = sum(item["subtotal"] for item in self.current_sale_items)
@@ -563,9 +521,9 @@ class Ui_Vendas(QWidget):
             "date": sale_date,
             "customer": customer,
             "total": total_value,
-            "payment_method": payment_method, # Adiciona a forma de pagamento
-            "received_amount": received_amount, # Adiciona o valor recebido
-            "change": received_amount - total_value, # Adiciona o troco
+            "payment_method": payment_method,
+            "received_amount": received_amount,
+            "change": received_amount - total_value,
             "status": "Concluída",
             "items": self.current_sale_items
         }
@@ -574,7 +532,7 @@ class Ui_Vendas(QWidget):
         QMessageBox.information(self, "Venda Salva", f"Venda {new_sale_id} salva com sucesso!\nTotal: R$ {total_value:.2f}\nTroco: R$ {new_sale['change']:.2f}")
         
         self._populate_sales_table(self.sales_data)
-        self._cancel_sale_form() # Retorna para a tela de listagem
+        self._cancel_sale_form()
 
     def _cancel_sale_form(self):
         reply = QMessageBox.question(self, "Confirmar Cancelamento", 
@@ -584,7 +542,6 @@ class Ui_Vendas(QWidget):
             self.sales_stacked_widget.setCurrentIndex(0)
             self.current_sale_items = []
             self._update_total_value()
-            # Limpa e reseta os campos do PDV
             self.product_input_pdv.clear()
             self.quantity_input_pdv.setText("1")
             self.customer_input_pdv.clear()
