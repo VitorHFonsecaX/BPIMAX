@@ -511,6 +511,25 @@ class Ui_Vendas(QWidget):
         if not customer:
             QMessageBox.warning(self, "Erro ao Salvar", "O nome do cliente não pode ser vazio.")
             return
+        
+        # Importa a classe Ui_Clientes para acessar os dados de clientes
+        from App.Nucleo.Clientes.Ui_clientes import Ui_Clientes
+        cliente_instance = Ui_Clientes()
+        
+        # Verifica se o cliente existe pelo ID ou Nome
+        customer_exists = False
+        for cliente in cliente_instance.clientes_data:
+            if customer == cliente["id"] or customer == cliente["nome"]:
+                customer_exists = True
+                # Se o cliente foi fornecido como nome, substitui pelo ID para padronização
+                if customer == cliente["nome"]:
+                    customer = cliente["id"]
+                break
+        
+        # Verifica formato do ID de cliente (deve começar com 'C' seguido de números)
+        if not customer_exists and not (customer.startswith('C') and customer[1:].isdigit()):
+            QMessageBox.warning(self, "Erro ao Salvar", "Cliente inválido. Informe um ID válido (ex: C001) ou o nome de um cliente cadastrado.")
+            return
         if not self.current_sale_items:
             QMessageBox.warning(self, "Erro ao Salvar", "A venda deve ter pelo menos um item.")
             return
