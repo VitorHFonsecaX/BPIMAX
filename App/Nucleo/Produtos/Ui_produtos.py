@@ -241,9 +241,14 @@ class Ui_Produtos(QWidget):
         
         try:
             preco = float(preco_text)
+        except ValueError:
+            QMessageBox.warning(self, "Erro de Formato", "Preço deve ser um número válido.")
+            return
+            
+        try:
             estoque = int(estoque_text) if estoque_text else 0
         except ValueError:
-            QMessageBox.warning(self, "Erro de Formato", "Preço deve ser um número e Estoque um número inteiro.")
+            QMessageBox.warning(self, "Erro de Formato", "Estoque deve ser um número inteiro.")
             return
 
         is_editing = hasattr(self, 'current_editing_produto_codigo') and self.current_editing_produto_codigo is not None
